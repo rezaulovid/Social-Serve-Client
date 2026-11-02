@@ -1,9 +1,9 @@
-
 "use client";
 
-import { useEffect, useState } from "react";
-import { MapPin, Calendar, ChevronRight } from "lucide-react";
+import { useEffect, useState, useMemo } from "react";
+import { MapPin, Calendar, ChevronRight, Search, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const API_URL = "http://localhost:8000/events";
 
@@ -31,10 +31,19 @@ const categoryColors: Record<string, string> = {
   Education: "bg-violet-100 text-violet-700",
 };
 
+const categories = [
+  "All",
+  "Donation",
+  "Cleanup",
+  "Plantation",
+  "Winter Relief",
+  "Food Drive",
+  "Health Camp",
+  "Education",
+];
+
 function getEventId(event: Event) {
-  return typeof event._id === "string"
-    ? event._id
-    : event._id.$oid;
+  return typeof event._id === "string" ? event._id : event._id.$oid;
 }
 
 function formatEventDate(date: string) {
@@ -66,6 +75,10 @@ export default function EventsSection() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  // New States for filtering and searching
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const controller = new AbortController();
@@ -112,8 +125,8 @@ export default function EventsSection() {
             return !Number.isNaN(date.getTime()) && date >= now;
           })
           .sort((a, b) => {
-            const getDate = (date: string) => {
-              const parts = date.split("/");
+            const getDate = (dateStr: string) => {
+              const parts = dateStr.split("/");
 
               return parts.length === 3
                 ? new Date(
@@ -121,7 +134,7 @@ export default function EventsSection() {
                     Number(parts[1]) - 1,
                     Number(parts[0])
                   ).getTime()
-                : new Date(date).getTime();
+                : new Date(dateStr).getTime();
             };
 
             return (
@@ -129,7 +142,7 @@ export default function EventsSection() {
             );
           });
 
-        setEvents(upcomingEvents.slice(0, 6));
+        setEvents(upcomingEvents);
       } catch (err) {
         if (err instanceof Error && err.name === "AbortError") {
           return;
@@ -152,18 +165,78 @@ export default function EventsSection() {
     return () => controller.abort();
   }, []);
 
+  // Filter and search logic
+  const filteredEvents = useMemo(() => {
+    return events.filter((event) => {
+      const matchesCategory =
+        selectedCategory === "All" || event.eventType === selectedCategory;
+      const matchesSearch =
+        event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        event.location.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [events, selectedCategory, searchQuery]);
+
   return (
     <section className="bg-white py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Section Heading */}
-        <div className="mb-12 text-center lg:mb-16">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground lg:text-4xl">
-            Recent Upcoming Events
-          </h2>
+        
+        {/* Section Heading & Create Event Button */}
+        <div className="mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6 lg:mb-12">
+          <div>
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-teal-50 px-3 py-1 text-xs font-semibold text-teal-700 mb-3">
+              <Calendar className="h-3.5 w-3.5" />
+              Future Community Drives
+            </div>
+            <h2 className="text-3xl font-bold tracking-tight text-foreground lg:text-4xl">
+              Upcoming Events
+            </h2>
 
-          <p className="mt-4 text-lg text-muted-foreground">
-            Be a part of these upcoming community events
-          </p>
+            <p className="mt-2 text-base text-muted-foreground max-w-2xl">
+              Discover verified volunteer initiatives scheduled for upcoming dates. Past events are automatically excluded so you can focus on active drives that need support.
+            </p>
+          </div>
+
+          <Link
+            href="/create-event"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal-600 px-5 py-3 text-sm font-semibold text-white shadow-lg transition-all hover:bg-teal-700 active:scale-95 shrink-0"
+          >
+            <Plus className="h-4 w-4" />
+            Create Event
+          </Link>
+        </div>
+
+        {/* Filters and Search Bar Section */}
+        <div className="mb-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-6 border-b border-border">
+          {/* Category Tabs */}
+          <div className="flex flex-wrap items-center gap-2">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={cn(
+                  "rounded-full px-4 py-2 text-xs font-semibold transition-all",
+                  selectedCategory === category
+                    ? "bg-teal-600 text-white shadow-sm"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                )}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          {/* Search Input */}
+          <div className="relative min-w-[280px]">
+            <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Search events or areas..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full rounded-full border border-border bg-background py-2.5 pl-10 pr-4 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-teal-500"
+            />
+          </div>
         </div>
 
         {/* Loading State */}
@@ -189,9 +262,9 @@ export default function EventsSection() {
         )}
 
         {/* Event Cards */}
-        {!loading && !error && events.length > 0 && (
+        {!loading && !error && filteredEvents.length > 0 && (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-            {events.map((event) => (
+            {filteredEvents.map((event) => (
               <article
                 key={getEventId(event)}
                 className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-background transition-all hover:-translate-y-1 hover:shadow-xl"
@@ -238,13 +311,13 @@ export default function EventsSection() {
                   </p>
 
                   <div className="mt-auto border-t border-border pt-4">
-                    <a
+                    <Link
                       href={`/events/${getEventId(event)}`}
-                      className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-violet-600 px-5 py-3 text-sm font-semibold text-white shadow-lg transition-all hover:bg-violet-700 active:scale-95"
+                      className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-teal-600 px-5 py-3 text-sm font-semibold text-white shadow-lg transition-all hover:bg-teal-700 active:scale-95"
                     >
                       View Event
                       <ChevronRight className="h-4 w-4" />
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </article>
@@ -253,27 +326,16 @@ export default function EventsSection() {
         )}
 
         {/* Empty State */}
-        {!loading && !error && events.length === 0 && (
+        {!loading && !error && filteredEvents.length === 0 && (
           <div className="rounded-2xl bg-gray-50 py-16 text-center">
             <h3 className="text-xl font-semibold text-foreground">
-              No Upcoming Events
+              No Events Found
             </h3>
             <p className="mt-2 text-muted-foreground">
-              Check back soon for new community events.
+              Try changing your search keywords or filter category.
             </p>
           </div>
         )}
-
-        {/* View All Events */}
-        <div className="mt-10 flex justify-center lg:mt-16">
-          <a
-            href="/events"
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-violet-200 bg-white px-6 py-3 text-sm font-semibold text-violet-600 shadow-sm transition-colors hover:border-violet-300 hover:bg-violet-50"
-          >
-            View All Events
-            <ChevronRight className="h-4 w-4" />
-          </a>
-        </div>
       </div>
     </section>
   );

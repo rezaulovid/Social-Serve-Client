@@ -61,14 +61,20 @@ export default function LoginPage({
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#f6f8f9] px-4 py-10">
-      <section className="w-full max-w-[450px] rounded-[24px] border border-slate-100 bg-white px-7 py-8 shadow-[0_18px_45px_rgba(15,23,42,0.09)] sm:px-9 sm:py-9">
-        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500 text-white shadow-md shadow-emerald-500/20">
+      <section className="w-full max-w-[450px] rounded-[24px] 
+      border border-slate-100
+       bg-white px-7 py-8 shadow-[0_18px_45px_rgba(15,23,42,0.09)]
+        sm:px-9 sm:py-9">
+        <div className="mx-auto flex h-12 w-12 items-center
+         justify-center rounded-2xl bg-yellow-500
+          text-white shadow-md shadow-emerald-500/20">
           <Heart size={24} strokeWidth={2.6} />
         </div>
 
 
         <header className="mt-3 text-center">
-          <h1 className="text-[30px] font-extrabold tracking-tight text-slate-950">
+          <h1 className="text-[30px] font-extrabold tracking-tight
+           text-slate-950">
             Welcome Back
           </h1>
           <p className="mt-1 text-sm text-slate-400">
@@ -81,13 +87,17 @@ export default function LoginPage({
           <div>
             <label
               htmlFor="email"
-              className="mb-2 block text-sm font-semibold text-slate-800"
+              className="mb-2 block text-sm font-semibold
+               text-slate-800"
             >
               Email
             </label>
 
 
-            <div className="flex h-12 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 transition focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100">
+            <div className="flex h-12 items-center gap-3 rounded-xl border
+             border-slate-200 bg-slate-50 px-4 transition
+              focus-within:border-yellow-500 focus-within:ring-2
+               focus-within:ring-emerald-100">
               <Mail size={18} className="shrink-0 text-slate-400" />
 
 
@@ -100,7 +110,8 @@ export default function LoginPage({
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="name@example.com"
-                className="h-full w-full bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400"
+                className="h-full w-full bg-transparent text-sm
+                 text-slate-800 outline-none placeholder:text-slate-400"
               />
             </div>
           </div>
@@ -117,13 +128,16 @@ export default function LoginPage({
 
 
               {/* Visual reference only; password recovery is not implemented. */}
-              <span className="text-xs font-semibold text-emerald-600">
+              <span className="text-xs font-semibold text-yellow-600">
                 Forgot password?
               </span>
             </div>
 
 
-            <div className="flex h-12 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 transition focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100">
+            <div className="flex h-12 items-center gap-3 rounded-xl border
+             border-slate-200 bg-slate-50 px-4 transition
+              focus-within:border-yellow-500 focus-within:ring-2
+               focus-within:ring-emerald-100">
               <LockKeyhole
                 size={18}
                 className="shrink-0 text-slate-400"
@@ -139,7 +153,8 @@ export default function LoginPage({
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 placeholder="Enter your password"
-                className="h-full w-full bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400"
+                className="h-full w-full bg-transparent text-sm
+                 text-slate-800 outline-none placeholder:text-slate-400"
               />
 
 
@@ -147,7 +162,8 @@ export default function LoginPage({
                 type="button"
                 onClick={() => setShowPassword((current) => !current)}
                 aria-label={showPassword ? "Hide password" : "Show password"}
-                className="shrink-0 text-slate-400 transition hover:text-slate-700"
+                className="shrink-0 text-slate-400 transition
+                 hover:text-slate-700"
               >
                 {showPassword ? (
                   <EyeOff size={18} />
@@ -162,7 +178,11 @@ export default function LoginPage({
           <button
             type="submit"
             disabled={isLoading}
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 text-sm font-bold text-white shadow-md shadow-emerald-600/20 transition hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-100 disabled:opacity-70"
+            className="flex h-12 w-full items-center justify-center 
+            gap-2 rounded-xl bg-yellow-600 px-5 text-sm font-bold
+             text-white shadow-md shadow-emerald-600/20 transition
+              hover:bg-yellow-700 focus:outline-none focus:ring-4
+               focus:ring-emerald-100 disabled:opacity-70"
           >
             {isLoading ? "Signing in..." : "Sign In"} <ArrowRight size={17} />
           </button>
@@ -191,7 +211,9 @@ export default function LoginPage({
               show({ title: "Google sign in failed", description: err.message || "Something went wrong", type: "error" });
             }
           }}
-          className="flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-slate-100"
+          className="flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 shadow-sm transition
+           hover:bg-slate-50 focus:outline-none focus:ring-4
+            focus:ring-slate-100"
         >
           <GoogleIcon />
           Continue with Google
@@ -209,7 +231,8 @@ export default function LoginPage({
                 router.push("/register");
               }
             }}
-            className="font-bold text-emerald-600 transition hover:text-emerald-700 hover:underline"
+            className="font-bold text-yellow-600 
+            transition hover:text-yellow-700 hover:underline"
           >
             Register here
           </button>

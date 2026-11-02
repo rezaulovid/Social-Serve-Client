@@ -46,12 +46,15 @@ export default function RegisterPage() {
           text-white shadow-md shadow-emerald-500/20">
           <Heart size={24} strokeWidth={2.6} />
         </div> */}
-        <p className="mx-auto flex h-12 w-12 items-center
-         justify-center rounded-2xl  bg-emerald-500
-          text-white shadow-md shadow-emerald-500/20 font-bold">Social</p>
+       <div className="mx-auto flex h-12 w-12 items-center
+         justify-center rounded-2xl bg-yellow-500
+          text-white shadow-md shadow-emerald-500/20">
+          <Heart size={24} strokeWidth={2.6} />
+        </div>
 
         <header className="mt-3 text-center">
-          <h1 className="text-[30px] font-extrabold tracking-tight text-slate-950">
+          <h1 className="text-[30px] font-extrabold tracking-tight
+           text-slate-950">
             Create Account
           </h1>
           <p className="mt-1 text-sm text-slate-400">
@@ -61,10 +64,14 @@ export default function RegisterPage() {
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-5">
           <div>
-            <label htmlFor="name" className="mb-2 block text-sm font-semibold text-slate-800">
+            <label htmlFor="name" className="mb-2 block text-sm 
+            font-semibold text-slate-800">
               Full name
             </label>
-            <div className="flex h-12 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 transition focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100">
+            <div className="flex h-12 items-center gap-3 rounded-xl
+             border border-slate-200 bg-slate-50 px-4 transition
+              focus-within:border-yellow-500 focus-within:ring-2
+               focus-within:ring-emerald-100">
               <User size={18} className="shrink-0 text-slate-400" />
               <input
                 id="name"
@@ -75,7 +82,8 @@ export default function RegisterPage() {
                 value={form.name}
                 onChange={(event) => setForm({ ...form, name: event.target.value })}
                 placeholder="Rezaul Islam"
-                className="h-full w-full bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400"
+                className="h-full w-full bg-transparent text-sm
+                 text-slate-800 outline-none placeholder:text-slate-400"
               />
             </div>
           </div>
@@ -84,7 +92,10 @@ export default function RegisterPage() {
             <label htmlFor="email" className="mb-2 block text-sm font-semibold text-slate-800">
               Email
             </label>
-            <div className="flex h-12 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 transition focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100">
+            <div className="flex h-12 items-center gap-3 rounded-xl 
+            border border-slate-200 bg-slate-50 px-4 transition
+             focus-within:border-yellow-500 focus-within:ring-2
+              focus-within:ring-emerald-100">
               <Mail size={18} className="shrink-0 text-slate-400" />
               <input
                 id="email"
@@ -95,16 +106,22 @@ export default function RegisterPage() {
                 value={form.email}
                 onChange={(event) => setForm({ ...form, email: event.target.value })}
                 placeholder="name@example.com"
-                className="h-full w-full bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400"
+                className="h-full w-full bg-transparent text-sm
+                 text-slate-800 outline-none placeholder:text-slate-400"
               />
             </div>
           </div>
 
           <div>
-            <label htmlFor="photoURL" className="mb-2 block text-sm font-semibold text-slate-800">
-              Profile photo URL <span className="text-slate-400 font-normal">(optional)</span>
+            <label htmlFor="photoURL" className="mb-2 block 
+            text-sm font-semibold text-slate-800">
+              Profile photo URL <span className="text-slate-400 
+              font-normal">(optional)</span>
             </label>
-            <div className="flex h-12 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 transition focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100">
+            <div className="flex h-12 items-center gap-3 rounded-xl
+             border border-slate-200 bg-slate-50 px-4 transition
+              focus-within:border-yellow-500 focus-within:ring-2
+               focus-within:ring-emerald-100">
               <ImageIcon size={18} className="shrink-0 text-slate-400" />
               <input
                 id="photoURL"
@@ -113,7 +130,8 @@ export default function RegisterPage() {
                 value={form.photoURL}
                 onChange={(event) => setForm({ ...form, photoURL: event.target.value })}
                 placeholder="https://example.com/photo.jpg"
-                className="h-full w-full bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400"
+                className="h-full w-full bg-transparent text-sm
+                 text-slate-800 outline-none placeholder:text-slate-400"
               />
             </div>
           </div>
@@ -122,7 +140,10 @@ export default function RegisterPage() {
             <label htmlFor="password" className="mb-2 block text-sm font-semibold text-slate-800">
               Password
             </label>
-            <div className="flex h-12 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 transition focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100">
+            <div className="flex h-12 items-center gap-3 rounded-xl border
+             border-slate-200 bg-slate-50 px-4 transition
+              focus-within:border-yellow-500 focus-within:ring-2
+               focus-within:ring-emerald-100">
               <LockKeyhole size={18} className="shrink-0 text-slate-400" />
               <input
                 id="password"
@@ -133,13 +154,15 @@ export default function RegisterPage() {
                 value={form.password}
                 onChange={(event) => setForm({ ...form, password: event.target.value })}
                 placeholder="Enter your password"
-                className="h-full w-full bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400"
+                className="h-full w-full bg-transparent text-sm
+                 text-slate-800 outline-none placeholder:text-slate-400"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword((current) => !current)}
                 aria-label={showPassword ? "Hide password" : "Show password"}
-                className="shrink-0 text-slate-400 transition hover:text-slate-700"
+                className="shrink-0 text-slate-400 transition
+                 hover:text-slate-700"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
@@ -152,7 +175,12 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 text-sm font-bold text-white shadow-md shadow-emerald-600/20 transition hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-100 disabled:opacity-70"
+            className="flex h-12 w-full items-center
+             justify-center gap-2 rounded-xl
+              bg-yellow-600 px-5 text-sm font-bold
+               text-white shadow-md shadow-emerald-600/20 transition
+                hover:bg-yellow-700 focus:outline-none focus:ring-4
+                 focus:ring-emerald-100 disabled:opacity-70"
           >
             {isLoading ? "Creating account..." : "Create Account"} <ArrowRight size={17} />
           </button>
@@ -162,7 +190,8 @@ export default function RegisterPage() {
           Already have an account?{" "}
           <Link
             href="/login"
-            className="font-bold text-emerald-600 transition hover:text-emerald-700 hover:underline"
+            className="font-bold text-yellow-600 transition
+             hover:text-yellow-700 hover:underline"
           >
             Sign in
           </Link>

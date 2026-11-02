@@ -42,7 +42,9 @@ export default function ImpactStats() {
                 "flex flex-col items-center justify-center gap-3 rounded-xl border border-border bg-muted/30 p-6 lg:p-8 text-center transition-all hover:bg-muted/50 relative"
               )}
             >
-              <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-white/60 text-primary shadow-sm">
+              <div className="flex items-center 
+              justify-center h-10 w-10 rounded-lg
+               bg-white/60 text-primary shadow-sm">
                 <stat.icon className="h-5 w-5" />
               </div>
               {stat.badge && (

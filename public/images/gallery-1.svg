@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <rect width="600" height="400" fill="#e5e7eb" />
+  <rect x="40" y="60" width="520" height="280" fill="#f3f4f6" rx="12" />
+  <ellipse cx="110" cy="160" rx="55" ry="45" fill="#e5e7eb" />
+  <circle cx="110" cy="125" r="22" fill="#d1d5db" />
+  <rect x="85" y="155" width="50" height="70" fill="#f3f4f6" rx="6" />
+  <circle cx="200" cy="150" r="20" fill="#d1d5db" />
+  <rect x="185" y="160" width="30" height="80" fill="#e5e7eb" rx="4" />
+  <circle cx="280" cy="145" r="18" fill="#d1d5db" />
+  <rect x="265" y="165" width="30" height="70" fill="#f3f4f6" rx="4" />
+  <circle cx="360" cy="155" r="20" fill="#d1d5db" />
+  <rect x="345" y="160" width="30" height="80" fill="#e5e7eb" rx="4" />
+  <circle cx="450" cy="145" r="18" fill="#d1d5db" />
+  <rect x="435" y="165" width="30" height="70" fill="#f3f4f6" rx="4" />
+  <circle cx="520" cy="155" r="18" fill="#d1d5db" />
+  <rect x="505" y="165" width="30" height="70" fill="#e5e7eb" rx="4" />
+  <path d="M110 220 L110 240" stroke="#374151" strokeWidth="8" strokeLinecap="round" />
+  <path d="M200 230 L200 250" stroke="#374151" strokeWidth="8" strokeLinecap="round" />
+  <path d="M280 225 L280 245" stroke="#374151" strokeWidth="8" strokeLinecap="round" />
+  <path d="M360 235 L360 255" stroke="#374151" strokeWidth="8" strokeLinecap="round" />
+  <path d="M450 225 L450 245" stroke="#374151" strokeWidth="8" strokeLinecap="round" />
+  <path d="M520 235 L520 255" stroke="#374151" strokeWidth="8" strokeLinecap="round" />
+  <rect x="90" y="290" width="420" height="50" fill="#111827" rx="8" opacity="0.6" />
+</svg>

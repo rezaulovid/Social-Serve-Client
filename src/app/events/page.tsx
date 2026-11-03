@@ -5,7 +5,7 @@ import Image from "next/image"
 import { MapPin, Calendar, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-const API_URL = "http://localhost:8000/events"
+const API_URL = (`${process.env.NEXT_PUBLIC_API_URL}/events`);
 const EVENT_IMAGE = "/images/hero.svg"
 
 export interface Event {

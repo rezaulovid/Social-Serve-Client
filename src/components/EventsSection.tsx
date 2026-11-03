@@ -5,7 +5,7 @@ import { MapPin, Calendar, ChevronRight, Search, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-const API_URL = "http://localhost:8000/events";
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/events`;
 
 type Event = {
   _id: {

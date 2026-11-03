@@ -134,7 +134,7 @@ export default function CreateEventPage() {
 
     setSubmitting(true)
     try {
-      const res = await fetch("http://localhost:8000/events", {
+      const res = await fetch("http://localhost:8000/create-event", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

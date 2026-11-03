@@ -1,37 +1,87 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
-import { auth } from './lib/auth'
-import { headers } from 'next/headers'
+
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { auth } from "./lib/auth";
+
+const protectedRoutes = [
+  "/create-event",
+  "/manage-events",
+  "/joined-events",
+];
+
+const authRoutes = ["/login", "/register"];
 
 export async function proxy(request: NextRequest) {
-  try {
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    })
-    
-    const user = session?.user
+  const { pathname } = request.nextUrl;
 
-    // If user is not authenticated, redirect to login page
-    if (!user) {
-      const loginUrl = new URL('/login', request.url)
-      // Attach callback URL so the user can be redirected back after logging in
-      loginUrl.searchParams.set('callbackUrl', request.nextUrl.pathname)
-      return NextResponse.redirect(loginUrl)
+  // Check whether the current route is protected
+  const isProtectedRoute = protectedRoutes.some(
+    (route) =>
+      pathname === route || pathname.startsWith(`${route}/`)
+  );
+
+  // Check whether the current route is an authentication page
+  const isAuthRoute = authRoutes.some(
+    (route) =>
+      pathname === route || pathname.startsWith(`${route}/`)
+  );
+
+  // Read existing authentication cookies as a fallback
+  const sessionToken =
+    request.cookies.get("better-auth.session_token")?.value ||
+    request.cookies.get("__Secure-better-auth.session_token")?.value ||
+    request.cookies.get("better-auth.session-data")?.value ||
+    request.cookies.get("socialserve_token")?.value;
+
+  const userCookie = request.cookies.get("socialserve_user")?.value;
+
+  try {
+    // Verify the actual Better Auth session
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
+
+    const isAuthenticated = !!session?.user || !!(
+      sessionToken || userCookie
+    );
+
+    // Redirect unauthenticated users from protected routes
+    if (isProtectedRoute && !isAuthenticated) {
+      const loginUrl = new URL("/login", request.url);
+
+      loginUrl.searchParams.set("callbackUrl", pathname);
+
+      return NextResponse.redirect(loginUrl);
     }
 
-    // Allow the request to proceed if user is logged in
-    return NextResponse.next()
+    // Redirect authenticated users away from login/register
+    if (isAuthRoute && isAuthenticated) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+
+    return NextResponse.next();
   } catch (error) {
-    // Fallback error handling: safe redirect to login if session fetch fails
-    return NextResponse.redirect(new URL('/login', request.url))
+    console.error("Proxy authentication error:", error);
+
+    // Fail safely for protected routes if session verification fails
+    if (isProtectedRoute) {
+      const loginUrl = new URL("/login", request.url);
+
+      loginUrl.searchParams.set("callbackUrl", pathname);
+
+      return NextResponse.redirect(loginUrl);
+    }
+
+    return NextResponse.next();
   }
 }
 
 export const config = {
-  // Covers main private routes and any nested sub-routes
   matcher: [
-    '/create-event/:path*',
-    '/manage-events/:path*',
-    '/joined-events/:path*',
+    "/create-event/:path*",
+    "/manage-events/:path*",
+    "/joined-events/:path*",
+    "/login",
+    "/register",
   ],
-}
+};

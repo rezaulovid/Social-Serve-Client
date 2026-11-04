@@ -19,7 +19,7 @@ import { useAuth } from "@/context/AuthContext";
 
 const EVENT_IMAGE = "/images/hero.svg";
 const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  process.env.NEXT_PUBLIC_API_URL
 
 interface Event {
   id?: string;
